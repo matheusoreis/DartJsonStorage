@@ -1,13 +1,23 @@
 class ItemModel {
-  final String name;
-  final double price;
-  final IconModel icon;
-
   ItemModel({
     required this.name,
     required this.price,
     required this.icon,
   });
+
+  factory ItemModel.fromJson(Map<String, dynamic> json) {
+    return ItemModel(
+      name: json['name'] as String,
+      price: json['price'] as double,
+      icon: IconModel.fromJson(
+        json['icon'] as Map<String, dynamic>,
+      ),
+    );
+  }
+
+  final String name;
+  final double price;
+  final IconModel icon;
 
   Map<String, dynamic> toJson() {
     return {
@@ -16,38 +26,28 @@ class ItemModel {
       'icon': icon.toJson(),
     };
   }
-
-  static ItemModel fromJson(Map<String, dynamic> json) {
-    return ItemModel(
-      name: json['name'],
-      price: json['price'],
-      icon: IconModel.fromJson(
-        json['icon'],
-      ),
-    );
-  }
 }
 
 class IconModel {
-  final int id;
-  final String fileName;
-
   IconModel({
     required this.id,
     required this.fileName,
   });
+
+  factory IconModel.fromJson(Map<String, dynamic> json) {
+    return IconModel(
+      id: json['id'] as int,
+      fileName: json['fileName'] as String,
+    );
+  }
+
+  final int id;
+  final String fileName;
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'fileName': fileName,
     };
-  }
-
-  static IconModel fromJson(Map<String, dynamic> json) {
-    return IconModel(
-      id: json['id'],
-      fileName: json['fileName'],
-    );
   }
 }

@@ -2,19 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 
 class FilesStorage {
-  late String _baseDir;
-
   FilesStorage(String baseDir) {
     _baseDir = baseDir;
     _init();
   }
+
+  late String _baseDir;
 
   Future<void> _init() async {
     await Directory(_baseDir).create(recursive: true);
   }
 
   Future<void> writeToFile(String filePath, Map<String, dynamic> data) async {
-    await _ensureDirectoryExists(filePath);
+    _ensureDirectoryExists(filePath);
 
     final file = File(filePath);
     final jsonString = jsonEncode(data);
@@ -25,7 +25,7 @@ class FilesStorage {
     try {
       final file = File(filePath);
 
-      if (!await file.exists()) {
+      if (!file.existsSync()) {
         return {};
       }
 
@@ -41,10 +41,10 @@ class FilesStorage {
     }
   }
 
-  Future<void> _ensureDirectoryExists(String filePath) async {
+  void _ensureDirectoryExists(String filePath) {
     final directory = Directory(File(filePath).parent.path);
-    if (!await directory.exists()) {
-      await directory.create(recursive: true);
+    if (!directory.existsSync()) {
+      directory.createSync(recursive: true);
     }
   }
 }
