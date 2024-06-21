@@ -29,4 +29,12 @@ class ItemORM implements ORMInterface<ItemModel> {
       ),
     );
   }
+
+  @override
+  Future<void> update(bool Function(ItemModel) filter, ItemModel Function(ItemModel) updateFields) async {
+    await _jsonOrm.update(
+      (data) => filter(ItemModel.fromJson(data)),
+      (data) => updateFields(ItemModel.fromJson(data)),
+    );
+  }
 }

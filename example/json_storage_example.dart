@@ -55,4 +55,8 @@ void main() async {
   for (final item in allItems) {
     print('Item: ${item.name}, ${item.price}, ${item.icon.id}');
   }
+
+  await userOrm.update((user) => user.name == 'Bob', (user) => UserModel(name: user.name, age: 26));
+
+  await itemOrm.update((item) => item.name == 'Item 2', (item) => ItemModel(name: item.name, price: 20, icon: item.icon));
 }

@@ -27,4 +27,12 @@ class UserORM implements ORMInterface<UserModel> {
       ),
     );
   }
+
+  @override
+  Future<void> update(bool Function(UserModel) filter, UserModel Function(UserModel) updateFields) async {
+    await _jsonOrm.update(
+      (data) => filter(UserModel.fromJson(data)),
+      (data) => updateFields(UserModel.fromJson(data)),
+    );
+  }
 }
